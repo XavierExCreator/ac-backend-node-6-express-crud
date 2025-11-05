@@ -2,6 +2,7 @@
 // Boilerplate Code to Set Up Server
 // ---------------------------------
 
+//Importing fs and express
 import express from "express";
 
 import fs from "fs/promises";
@@ -9,10 +10,12 @@ import fs from "fs/promises";
 // Helper Functions
 // ---------------------------------
 
+//Declaring variables for express and the port
 const app = express();
 
 const port = 3000;
 
+//Making a .use and .listen so a port is created to use for a localServer to be opened that we can view the endpoints we mak for the api.
 app.use(express.json());
 
 app.listen(port, () => {
@@ -20,7 +23,7 @@ app.listen(port, () => {
 });
 
 // 1. getAllRecipes()
-
+//This async function will parse the data and return the full array of objects in the localServer
 async function getAllRecipes() {
     const data = await fs.readFile("./recipes-data.json", "utf8");
     const parsedRecipes = JSON.parse(data);
@@ -28,7 +31,7 @@ async function getAllRecipes() {
 }
 
 // 2. getOneRecipe(index)
-
+//This async function will parse the data and run the specific recipe the localServer has been assigned to get in the URL
 async function getOneRecipe(index) {
     const data = await fs.readFile("./recipes-data.json", "utf8");
     const parsedRecipes = JSON.parse(data);
@@ -36,7 +39,7 @@ async function getOneRecipe(index) {
 }
 
 // 3. getAllRecipeNames()
-
+//This async function will parse the data and show all of the recipes names ONLY to the user, using the .map method
 async function getAllRecipeNames() {
     const data = await fs.readFile("./recipes-data.json", "utf8");
     const parsedRecipes = JSON.parse(data);
@@ -47,7 +50,7 @@ async function getAllRecipeNames() {
 }
 
 // 4. getRecipesCount()
-
+//This async function will track the count of the amount of recipes in the array object using .length to see how many objects are inside the array of objects
 async function getRecipesCount() {
    const  data = await fs.readFile("./recipes-data.json", "utf8");
     const parsedRecipes = JSON.parse(data);
@@ -60,7 +63,7 @@ async function getRecipesCount() {
 // ---------------------------------
 
 // 1. GET /get-all-recipes
-
+//This endpoint waits for the variable to load the function above
 app.get("/get-all-recipes", async (req, res) => {
     const recipes = await getAllRecipes();
 
@@ -68,7 +71,7 @@ app.get("/get-all-recipes", async (req, res) => {
 });
 
 // 2. GET /get-one-recipe/:index
-
+//This endpoint waits for the variable to load the function above
 app.get("/get-one-recipe/:index", async (req, res) => {
     const index = req.params.index
     const recipes = await getOneRecipe(index);
@@ -77,7 +80,7 @@ app.get("/get-one-recipe/:index", async (req, res) => {
 });
 
 // 3. GET /get-all-recipe-names
-
+//This endpoint waits for the variable to load the function above
 app.get("/get-all-recipe-names", async (req, res) => {
 
     const recipes = await getAllRecipeNames();
@@ -86,7 +89,7 @@ app.get("/get-all-recipe-names", async (req, res) => {
 });
 
 // 4. GET /get-recipes-count
-
+//This endpoint waits for the variable to load the function above
 app.get("/get-recipes-count", async (req, res) => {
     const recipes = await getRecipesCount();
 
