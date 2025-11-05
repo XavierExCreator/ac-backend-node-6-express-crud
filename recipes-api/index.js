@@ -37,18 +37,22 @@ async function getOneRecipe(index) {
 
 // 3. getAllRecipeNames()
 
-async function getAllRecipeNames(index) {
+async function getAllRecipeNames() {
     const data = await fs.readFile("./recipes-data.json", "utf8");
     const parsedRecipes = JSON.parse(data);
-    return parsedRecipes[index];
+ 
+    const recipeNames = parsedRecipes.map((recipeName) => recipeName.name)
+
+    return recipeNames;
 }
 
 // 4. getRecipesCount()
 
-async function getRecipesCount(index) {
+async function getRecipesCount() {
    const  data = await fs.readFile("./recipes-data.json", "utf8");
     const parsedRecipes = JSON.parse(data);
-    return parsedRecipes[index];
+
+    return parsedRecipes.length;
 }
 
 // ---------------------------------
@@ -75,9 +79,10 @@ app.get("/get-one-recipe/:index", async (req, res) => {
 // 3. GET /get-all-recipe-names
 
 app.get("/get-all-recipe-names", async (req, res) => {
+
     const recipes = await getAllRecipeNames();
 
-    res.json({title: recipes});
+    res.json({recipeNames: recipes});
 });
 
 // 4. GET /get-recipes-count
@@ -85,5 +90,5 @@ app.get("/get-all-recipe-names", async (req, res) => {
 app.get("/get-recipes-count", async (req, res) => {
     const recipes = await getRecipesCount();
 
-    res.json({viewed: recipes});
+    res.json({totalRecipes: recipes});
 });
